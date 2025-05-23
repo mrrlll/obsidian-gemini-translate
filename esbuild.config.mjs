@@ -1,6 +1,12 @@
 import esbuild from "esbuild";
 import process from "process";
 import builtins from "builtin-modules";
+import fs from "fs";
+import path from "path";
+import { createWriteStream } from "fs";
+import { pipeline } from "stream";
+import { promisify } from "util";
+import archiver from "archiver";
 
 const banner =
 `/*
@@ -11,11 +17,71 @@ if you want to view the source, please visit the github repository of this plugi
 
 const prod = (process.argv[2] === "production");
 
+// ファイルコピー関数
+function copyFile(src, dest) {
+	const destDir = path.dirname(dest);
+	if (!fs.existsSync(destDir)) {
+		fs.mkdirSync(destDir, { recursive: true });
+	}
+	fs.copyFileSync(src, dest);
+	console.log(`Copied ${src} to ${dest}`);
+}
+
+// distディレクトリの作成とファイルコピー
+async function copyAssets() {
+	if (!fs.existsSync("dist")) {
+		fs.mkdirSync("dist", { recursive: true });
+	}
+	
+	// manifest.jsonとstyles.cssをdistにコピー
+	copyFile("manifest.json", "dist/manifest.json");
+	copyFile("styles.css", "dist/styles.css");
+	
+	// プロジェクト名のフォルダを作成
+	const projectName = "obsidian-gemini-translate";
+	const projectDir = path.join("dist", projectName);
+	
+	if (!fs.existsSync(projectDir)) {
+		fs.mkdirSync(projectDir, { recursive: true });
+	}
+	
+	// プロジェクトフォルダに3つのファイルをコピー
+	copyFile("dist/main.js", path.join(projectDir, "main.js"));
+	copyFile("dist/manifest.json", path.join(projectDir, "manifest.json"));
+	copyFile("dist/styles.css", path.join(projectDir, "styles.css"));
+	
+	// zipファイルを作成
+	await createZip(projectDir, path.join("dist", `${projectName}.zip`));
+}
+
+// zipファイル作成関数
+async function createZip(sourceDir, outputPath) {
+	return new Promise((resolve, reject) => {
+		const output = createWriteStream(outputPath);
+		const archive = archiver('zip', {
+			zlib: { level: 9 } // 最高圧縮レベル
+		});
+
+		output.on('close', () => {
+			console.log(`Created ${outputPath} (${archive.pointer()} total bytes)`);
+			resolve();
+		});
+
+		archive.on('error', (err) => {
+			reject(err);
+		});
+
+		archive.pipe(output);
+		archive.directory(sourceDir, false);
+		archive.finalize();
+	});
+}
+
 const context = await esbuild.context({
 	banner: {
 		js: banner,
 	},
-	entryPoints: ["main.ts"],
+	entryPoints: ["src/main.ts"],
 	bundle: true,
 	external: [
 		"obsidian",
@@ -37,13 +103,16 @@ const context = await esbuild.context({
 	logLevel: "info",
 	sourcemap: prod ? false : "inline",
 	treeShaking: true,
-	outfile: "main.js",
+	outfile: "dist/main.js",
 	minify: prod,
 });
 
 if (prod) {
 	await context.rebuild();
+	await copyAssets();
 	process.exit(0);
 } else {
+	// 開発モードでも初回にアセットをコピー
+	await copyAssets();
 	await context.watch();
 }

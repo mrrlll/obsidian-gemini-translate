@@ -2,7 +2,7 @@
 	"name": "obsidian-gemini-translate",
 	"version": "1.0.0",
 	"description": "選択したテキストをGeminiで翻訳するプラグイン",
-	"main": "main.js",
+	"main": "dist/main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
@@ -12,9 +12,11 @@
 	"author": "",
 	"license": "MIT",
 	"devDependencies": {
+		"@types/archiver": "^6.0.3",
 		"@types/node": "^16.11.6",
 		"@typescript-eslint/eslint-plugin": "5.29.0",
 		"@typescript-eslint/parser": "5.29.0",
+		"archiver": "^7.0.1",
 		"builtin-modules": "3.3.0",
 		"esbuild": "0.17.3",
 		"obsidian": "latest",
