@@ -39,9 +39,6 @@
 
 - **Gemini API Key**: Google AI StudioのAPIキー
 - **モデル**: 使用するGeminiモデル
-  - Gemini Pro（標準）
-  - Gemini 1.5 Pro（高性能）
-  - Gemini 1.5 Flash（高速）
 - **翻訳先言語**: 翻訳先の言語（デフォルト: 日本語）
 
 ## 開発
