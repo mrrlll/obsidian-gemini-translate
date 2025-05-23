@@ -1,8 +1,212 @@
-/*
+/* Gemini翻訳プラグインのスタイル */
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+.gemini-translate-header {
+    padding: 10px;
+    border-bottom: 1px solid var(--background-modifier-border);
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-If your plugin does not need CSS, delete this file.
+.gemini-translate-header h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
 
-*/
+.gemini-translate-clear-button {
+    padding: 4px 12px;
+    font-size: 12px;
+    background-color: var(--interactive-normal);
+    color: var(--text-normal);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.gemini-translate-clear-button:hover {
+    background-color: var(--interactive-hover);
+}
+
+.gemini-translate-input-area {
+    padding: 10px;
+    border-bottom: 1px solid var(--background-modifier-border);
+    margin-bottom: 10px;
+}
+
+.gemini-translate-input {
+    width: 100%;
+    padding: 8px;
+    background-color: var(--background-secondary);
+    color: var(--text-normal);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    resize: vertical;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.gemini-translate-input:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+}
+
+.gemini-translate-button {
+    width: 100%;
+    padding: 8px 16px;
+    background-color: var(--interactive-accent);
+    color: var(--text-on-accent);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.gemini-translate-button:hover {
+    background-color: var(--interactive-accent-hover);
+}
+
+.gemini-translate-button:active {
+    transform: translateY(1px);
+}
+
+.gemini-translate-content {
+    padding: 10px;
+    overflow-y: auto;
+    height: calc(100% - 180px);
+}
+
+.gemini-translate-history {
+    display: flex;
+    flex-direction: column;
+}
+
+.translation-item {
+    margin-bottom: 20px;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.error-item {
+    margin-bottom: 20px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.translation-timestamp {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+.translation-separator {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid var(--background-modifier-border);
+}
+
+.translation-section {
+    margin-bottom: 20px;
+}
+
+.translation-section h5 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.original-text,
+.translated-text {
+    padding: 10px;
+    background-color: var(--background-secondary);
+    border-radius: 5px;
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    line-height: 1.5;
+}
+
+/* テキスト選択を有効にする */
+.user-select {
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+}
+
+.original-text:hover,
+.translated-text:hover {
+    background-color: var(--background-secondary-alt);
+}
+
+.translated-text {
+    background-color: var(--background-primary-alt);
+    border: 1px solid var(--background-modifier-border);
+}
+
+.loading-indicator {
+    background-color: var(--background-primary-alt);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.8;
+    }
+}
+
+.loading-message {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 20px;
+}
+
+.initial-message {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 40px 20px;
+}
+
+.initial-message p {
+    margin: 0;
+}
+
+.error-message {
+    color: var(--text-error);
+    padding: 10px;
+    background-color: var(--background-secondary);
+    border-radius: 5px;
+    border: 1px solid var(--text-error);
+}
+
+/* コンテキストメニューのアイコン */
+.menu-item-icon.languages {
+    color: var(--text-accent);
+}
+
+/* リボンアイコン */
+.my-plugin-ribbon-class {
+    color: var(--text-accent);
+}
