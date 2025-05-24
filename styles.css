@@ -1,212 +1,411 @@
 /* Gemini翻訳プラグインのスタイル */
 
 .gemini-translate-header {
-    padding: 10px;
-    border-bottom: 1px solid var(--background-modifier-border);
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	padding: 8px 10px;
+	border-bottom: 1px solid var(--background-modifier-border);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: var(--background-secondary);
+	min-height: 40px;
+}
+
+.header-title-section {
+	display: flex;
+	align-items: center;
 }
 
 .gemini-translate-header h4 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 600;
+	margin: 0;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+/* ヘッダー統合スレッド管理 */
+.header-thread-controls {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.header-thread-selector-container {
+	display: flex;
+	align-items: center;
+}
+
+.header-thread-selector {
+	padding: 4px 6px;
+	background-color: var(--background-primary);
+	color: var(--text-normal);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 3px;
+	font-size: 12px;
+	min-width: 120px;
+	max-width: 150px;
+}
+
+.header-thread-selector:focus {
+	outline: none;
+	border-color: var(--interactive-accent);
+}
+
+.header-thread-buttons {
+	display: flex;
+	gap: 4px;
+}
+
+.header-thread-button {
+	width: 24px;
+	height: 24px;
+	padding: 0;
+	font-size: 12px;
+	font-weight: bold;
+	background-color: var(--interactive-normal);
+	color: var(--text-normal);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 3px;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.header-thread-button:hover {
+	background-color: var(--interactive-hover);
+}
+
+.header-thread-button.delete-button {
+	background-color: var(--text-error);
+	color: var(--text-on-accent);
+	border-color: var(--text-error);
+}
+
+.header-thread-button.delete-button:hover {
+	background-color: var(--text-error);
+	opacity: 0.8;
 }
 
 .gemini-translate-clear-button {
-    padding: 4px 12px;
-    font-size: 12px;
-    background-color: var(--interactive-normal);
-    color: var(--text-normal);
-    border: 1px solid var(--background-modifier-border);
-    border-radius: 4px;
-    cursor: pointer;
+	padding: 4px 12px;
+	font-size: 12px;
+	background-color: var(--interactive-normal);
+	color: var(--text-normal);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	cursor: pointer;
 }
 
 .gemini-translate-clear-button:hover {
-    background-color: var(--interactive-hover);
+	background-color: var(--interactive-hover);
+}
+
+/* 旧スレッド管理エリア（削除済み - ヘッダーに統合） */
+/* 以下のスタイルは後方互換性のため残しておく */
+.gemini-translate-thread-controls {
+	display: none; /* ヘッダーに統合されたため非表示 */
 }
 
 .gemini-translate-input-area {
-    padding: 10px;
-    border-bottom: 1px solid var(--background-modifier-border);
-    margin-bottom: 10px;
+	position: sticky;
+	top: 40px;
+	z-index: 9;
+	padding: 10px;
+	border-bottom: 1px solid var(--background-modifier-border);
+	background-color: var(--background-primary);
+	transition: all 0.3s ease;
+}
+
+.gemini-translate-input-area.collapsed {
+	padding: 5px 10px;
+}
+
+.input-area-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.input-area-header h5 {
+	margin: 0;
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--text-normal);
+}
+
+.input-toggle-button {
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	font-size: 12px;
+	font-weight: bold;
+	background-color: var(--interactive-normal);
+	color: var(--text-normal);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 3px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.input-toggle-button:hover {
+	background-color: var(--interactive-hover);
+}
+
+.input-content {
+	transition: all 0.3s ease;
+	overflow: hidden;
+}
+
+.input-content.collapsed {
+	max-height: 0;
+	opacity: 0;
+	margin-bottom: 0;
 }
 
 .gemini-translate-input {
-    width: 100%;
-    padding: 8px;
-    background-color: var(--background-secondary);
-    color: var(--text-normal);
-    border: 1px solid var(--background-modifier-border);
-    border-radius: 4px;
-    resize: vertical;
-    font-family: inherit;
-    font-size: 14px;
-    line-height: 1.5;
-    margin-bottom: 10px;
+	width: 100%;
+	padding: 8px;
+	background-color: var(--background-secondary);
+	color: var(--text-normal);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	resize: vertical;
+	font-family: inherit;
+	font-size: 14px;
+	line-height: 1.5;
+	margin-bottom: 10px;
 }
 
 .gemini-translate-input:focus {
-    outline: none;
-    border-color: var(--interactive-accent);
+	outline: none;
+	border-color: var(--interactive-accent);
 }
 
 .gemini-translate-button {
-    width: 100%;
-    padding: 8px 16px;
-    background-color: var(--interactive-accent);
-    color: var(--text-on-accent);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background-color 0.2s ease;
+	width: 100%;
+	padding: 8px 16px;
+	background-color: var(--interactive-accent);
+	color: var(--text-on-accent);
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 500;
+	transition: background-color 0.2s ease;
 }
 
 .gemini-translate-button:hover {
-    background-color: var(--interactive-accent-hover);
+	background-color: var(--interactive-accent-hover);
 }
 
 .gemini-translate-button:active {
-    transform: translateY(1px);
+	transform: translateY(1px);
 }
 
 .gemini-translate-content {
-    padding: 10px;
-    overflow-y: auto;
-    height: calc(100% - 180px);
+	padding: 10px;
+	overflow-y: auto;
+	flex: 1;
+	min-height: 0;
+}
+
+.gemini-translate-view {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 }
 
 .gemini-translate-history {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .translation-item {
-    margin-bottom: 20px;
-    animation: fadeIn 0.3s ease-in;
+	margin-bottom: 20px;
+	animation: fadeIn 0.3s ease-in;
 }
 
 .error-item {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 .translation-timestamp {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-bottom: 10px;
+	font-size: 12px;
+	color: var(--text-muted);
+	margin-bottom: 10px;
 }
 
 .translation-separator {
-    margin: 20px 0;
-    border: none;
-    border-top: 1px solid var(--background-modifier-border);
+	margin: 20px 0;
+	border: none;
+	border-top: 1px solid var(--background-modifier-border);
 }
 
 .translation-section {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 .translation-section h5 {
-    margin: 0 0 10px 0;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-muted);
+	margin: 0 0 10px 0;
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--text-muted);
 }
 
 .original-text,
 .translated-text {
-    padding: 10px;
-    background-color: var(--background-secondary);
-    border-radius: 5px;
-    margin: 0;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    line-height: 1.5;
+	padding: 10px;
+	background-color: var(--background-secondary);
+	border-radius: 5px;
+	margin: 0;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	line-height: 1.5;
 }
 
 /* テキスト選択を有効にする */
 .user-select {
-    user-select: text;
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
+	user-select: text;
+	-webkit-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
 }
 
 .original-text:hover,
 .translated-text:hover {
-    background-color: var(--background-secondary-alt);
+	background-color: var(--background-secondary-alt);
 }
 
 .translated-text {
-    background-color: var(--background-primary-alt);
-    border: 1px solid var(--background-modifier-border);
+	background-color: var(--background-primary-alt);
+	border: 1px solid var(--background-modifier-border);
 }
 
 .loading-indicator {
-    background-color: var(--background-primary-alt);
-    border-radius: 5px;
-    margin-bottom: 20px;
-    animation: pulse 1.5s ease-in-out infinite;
+	background-color: var(--background-primary-alt);
+	border-radius: 5px;
+	margin-bottom: 20px;
+	animation: pulse 1.5s ease-in-out infinite;
 }
 
 @keyframes pulse {
-    0% {
-        opacity: 0.8;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0.8;
-    }
+	0% {
+		opacity: 0.8;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0.8;
+	}
 }
 
 .loading-message {
-    text-align: center;
-    color: var(--text-muted);
-    padding: 20px;
+	text-align: center;
+	color: var(--text-muted);
+	padding: 20px;
 }
 
 .initial-message {
-    text-align: center;
-    color: var(--text-muted);
-    padding: 40px 20px;
+	text-align: center;
+	color: var(--text-muted);
+	padding: 40px 20px;
 }
 
 .initial-message p {
-    margin: 0;
+	margin: 0;
 }
 
 .error-message {
-    color: var(--text-error);
-    padding: 10px;
-    background-color: var(--background-secondary);
-    border-radius: 5px;
-    border: 1px solid var(--text-error);
+	color: var(--text-error);
+	padding: 10px;
+	background-color: var(--background-secondary);
+	border-radius: 5px;
+	border: 1px solid var(--text-error);
 }
 
 /* コンテキストメニューのアイコン */
 .menu-item-icon.languages {
-    color: var(--text-accent);
+	color: var(--text-accent);
 }
 
 /* リボンアイコン */
 .my-plugin-ribbon-class {
-    color: var(--text-accent);
+	color: var(--text-accent);
+}
+
+/* システムプロンプトモーダルのスタイル */
+.modal .setting-item-description {
+	font-size: 13px;
+	color: var(--text-muted);
+	margin-bottom: 15px;
+	line-height: 1.4;
+}
+
+.modal h4 {
+	margin: 20px 0 10px 0;
+	font-size: 16px;
+	font-weight: 600;
+	color: var(--text-normal);
+	border-bottom: 1px solid var(--background-modifier-border);
+	padding-bottom: 5px;
+}
+
+.modal h4:first-of-type {
+	margin-top: 10px;
+}
+
+.modal .setting-item {
+	margin-bottom: 20px;
+}
+
+.modal .setting-item-name {
+	font-weight: 500;
+	margin-bottom: 5px;
+}
+
+.modal .setting-item-description {
+	font-size: 12px;
+	color: var(--text-muted);
+	margin-bottom: 8px;
+}
+
+.modal textarea {
+	min-height: 80px;
+	font-family: var(--font-monospace);
+	font-size: 13px;
+	line-height: 1.4;
+	resize: vertical;
+}
+
+.modal textarea:focus {
+	border-color: var(--interactive-accent);
+	box-shadow: 0 0 0 2px var(--interactive-accent-hover);
+}
+
+/* モーダル内のボタンスタイル */
+.modal .setting-item .setting-item-control button {
+	margin-right: 10px;
+}
+
+.modal .setting-item .setting-item-control button:last-child {
+	margin-right: 0;
 }
